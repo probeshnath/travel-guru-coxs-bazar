@@ -1,15 +1,32 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { NavLink } from 'react-router-dom'
 import logo from '../../public/logo.png';
+import { AuthContext } from './AuthProvider/AuthContext';
 
 const Navbar = () => {
+    const {user,logout } = useContext(AuthContext)
+
+    const logoutUser = () =>{
+        console.log("logout")
+        logout()
+        .then(()=>{
+            console.log("logout user")
+        })
+        .catch((error) =>{
+            console.log(error)
+        })
+    }
 
     const links = <>
         <li> <NavLink to="/news" className={({ isActive, isPending }) => isPending ? "pending" : isActive ? "active" : ""}> News </NavLink></li>
         <li> <NavLink to="/" className={({ isActive, isPending }) => isPending ? "pending" : isActive ? "active" : ""}> Destination </NavLink></li>
-        <li> <NavLink to="/blogs" className={({ isActive, isPending }) => isPending ? "pending" : isActive ? "active" : ""}> Blogs </NavLink></li>
+        <li> <NavLink to="/blogs" className={({ isActive, isPending }) => isPending ? "pending" : isActive ? "active" : ""}> User </NavLink></li>
         <li> <NavLink to="/contact" className={({ isActive, isPending }) => isPending ? "pending" : isActive ? "active" : ""}> Contact </NavLink></li>
-        <li> <NavLink to="/login" className={({ isActive, isPending }) => isPending ? "pending" : isActive ? "active" : ""}> <button>Login</button> </NavLink></li>
+        {
+            user ? 
+            <li><button onClick={logoutUser}>Logout</button> </li> :
+            <li> <NavLink to="/login" className={({ isActive, isPending }) => isPending ? "pending" : isActive ? "active" : ""}> <button>Login</button> </NavLink></li>
+        }
 
     </>
     return (

@@ -2,8 +2,16 @@ import React, { useContext } from 'react'
 import Navbar from '../../components/Navbar'
 import bgImage from '../../../public/images/Rectangle 1.png'
 import Swiper from '../../components/Swiper'
+import { AuthContext } from '../../components/AuthProvider/AuthContext'
+
 
 const Home = () => {
+
+const {loading} = useContext(AuthContext)
+
+if(loading){
+  return <h2>Loading....</h2>
+}
 
     return (
         <div>
