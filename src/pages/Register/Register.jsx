@@ -3,6 +3,7 @@ import Navbar from '../../components/Navbar'
 import { Link } from 'react-router-dom'
 import SocialLogin from '../../components/SocialLogin'
 import { AuthContext } from '../../components/AuthProvider/AuthContext'
+import { updateProfile } from 'firebase/auth'
 
 
 const Register = () => {
@@ -18,6 +19,17 @@ const Register = () => {
     console.log(name , email, password, photo)
     register(email,password)
     .then((result) =>{
+      // update prodile
+      updateProfile(result.user,{
+        displayName: name,
+        photoURL:photo || "https://cdn.iconscout.com/icon/free/png-256/free-laptop-user-1-1179329.png?f=webp"
+      })
+      .then(()=>{
+        console.log("user updated")
+      })
+      .catch((error) =>{
+        console.log(error)
+      })
       console.log(result.user)
     })
     .catch((error) =>{
